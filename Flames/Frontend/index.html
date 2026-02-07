@@ -111,7 +111,7 @@ fetch("https://flames-1-4zfs.onrender.com/flames",{
 .then(res=>res.json())
 .then(data=>{
 
-let r = data.result;
+let r = data;   // <-- IMPORTANT CHANGE
 
 let text="";
 let emo="";
@@ -130,9 +130,11 @@ document.getElementById("emoji").innerText = emo;
 
 });
 
+
 }
 
 </script>
 
 </body>
 </html>
+

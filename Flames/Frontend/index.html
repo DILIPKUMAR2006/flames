@@ -1,1 +1,138 @@
-<!DOCTYPE html> <html> <head> <title>FLAMES</title> <style> body{ text-align:center; margin-top:100px; font-family:Arial; } input{ padding:10px; margin:5px; } button{ padding:10px 20px; } </style> </head> <body> <h2>🔥 FLAMES Checker</h2> <input id="s1" placeholder="Your Name"><br> <input id="s2" placeholder="Partner Name"><br><br> <button onclick="check()">Check</button> <h3 id="result"></h3> <script> function check(){ let a = document.getElementById("s1").value; let b = document.getElementById("s2").value; fetch("https://flames-1-4zfs.onrender.com/flames",{ method:"POST", headers:{ "Content-Type":"application/json" }, body:JSON.stringify({ name1:a, name2:b }) }) .then(res=>res.json()) .then(data=>{ document.getElementById("result").innerText = "Result : "+data.result; }); } </script> </body> </html>
+<!DOCTYPE html>
+<html>
+<head>
+<title>FLAMES</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ff512f,#dd2476);
+    font-family:Arial;
+}
+
+.box{
+    background:white;
+    padding:35px;
+    border-radius:20px;
+    width:320px;
+    text-align:center;
+    box-shadow:0 20px 40px rgba(0,0,0,.3);
+}
+
+input{
+    width:90%;
+    padding:10px;
+    margin:8px 0;
+    border-radius:10px;
+    border:1px solid #ccc;
+}
+
+button{
+    padding:10px 30px;
+    background:#ff0055;
+    border:none;
+    border-radius:20px;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#d90047;
+}
+
+#result{
+    margin-top:20px;
+    font-size:22px;
+}
+
+.heart{
+    animation:pulse .6s infinite alternate;
+}
+
+@keyframes pulse{
+    from{transform:scale(1)}
+    to{transform:scale(1.3)}
+}
+
+.angry{
+    animation:shake .3s infinite;
+}
+
+@keyframes shake{
+0%{transform:translateX(0)}
+25%{transform:translateX(-5px)}
+50%{transform:translateX(5px)}
+75%{transform:translateX(-5px)}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>🔥 FLAMES Checker</h2>
+
+<input id="s1" placeholder="Your Name">
+<input id="s2" placeholder="Partner Name">
+
+<br><br>
+
+<button onclick="check()">Check</button>
+
+<h3 id="result"></h3>
+<h1 id="emoji"></h1>
+
+</div>
+
+<script>
+
+function check(){
+
+let a = document.getElementById("s1").value;
+let b = document.getElementById("s2").value;
+
+fetch("https://flames-1-4zfs.onrender.com/flames",{
+    method:"POST",
+    headers:{
+        "Content-Type":"application/json"
+    },
+    body:JSON.stringify({
+        name1:a,
+        name2:b
+    })
+})
+.then(res=>res.json())
+.then(data=>{
+
+let r = data.result;
+
+let text="";
+let emo="";
+let cls="";
+
+if(r=="F"){text="FRIENDS"; emo="🤝";}
+if(r=="L"){text="LOVE"; emo="❤️"; cls="heart";}
+if(r=="A"){text="AFFECTION"; emo="🥰";}
+if(r=="M"){text="MARRIAGE"; emo="💍";}
+if(r=="E"){text="ENEMY"; emo="😡"; cls="angry";}
+if(r=="S"){text="SIBLING"; emo="👫";}
+
+document.getElementById("result").innerText = "Result : "+text;
+document.getElementById("emoji").className = cls;
+document.getElementById("emoji").innerText = emo;
+
+});
+
+}
+
+</script>
+
+</body>
+</html>

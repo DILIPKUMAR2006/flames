@@ -108,10 +108,10 @@ fetch("https://flames-1-4zfs.onrender.com/flames",{
         name2:b
     })
 })
-.then(res=>res.json())
+.then(res=>res.text())   // <-- HERE
 .then(data=>{
 
-let r = data;   // <-- IMPORTANT CHANGE
+let r = data.trim();     // <-- IMPORTANT
 
 let text="";
 let emo="";
@@ -137,4 +137,5 @@ document.getElementById("emoji").innerText = emo;
 
 </body>
 </html>
+
 

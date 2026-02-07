@@ -1,60 +1,177 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>FLAMES</title>
+<meta charset="UTF-8">
+<title>FLAMES Love Checker</title>
 
 <style>
+*{
+    box-sizing:border-box;
+    font-family: "Segoe UI", Arial;
+}
+
 body{
+    min-height:100vh;
+    margin:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#1d2671,#c33764);
+}
+
+.card{
+    background:rgba(255,255,255,0.15);
+    backdrop-filter: blur(15px);
+    padding:40px;
+    border-radius:20px;
+    width:350px;
     text-align:center;
-    margin-top:100px;
-    font-family:Arial;
+    color:white;
+    box-shadow:0 20px 40px rgba(0,0,0,0.4);
+    transform-style:preserve-3d;
+    transition:.4s;
 }
+
+.card:hover{
+    transform:rotateX(8deg) rotateY(-8deg);
+}
+
 input{
-    padding:10px;
-    margin:5px;
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    margin:10px 0;
+    outline:none;
 }
+
 button{
-    padding:10px 20px;
+    padding:12px 30px;
+    border:none;
+    border-radius:25px;
+    background:#ff4d6d;
+    color:white;
+    cursor:pointer;
+    font-size:16px;
+    margin-top:10px;
+}
+
+button:hover{
+    background:#ff1e4d;
+}
+
+#result{
+    margin-top:25px;
+    font-size:24px;
+    font-weight:bold;
+    min-height:40px;
+}
+
+.heart{
+    animation:beat 0.6s infinite alternate;
+}
+
+@keyframes beat{
+    from{transform:scale(1);}
+    to{transform:scale(1.3);}
+}
+
+.angry{
+    animation:shake .3s infinite;
+}
+
+@keyframes shake{
+    0%{transform:translateX(0)}
+    25%{transform:translateX(-5px)}
+    50%{transform:translateX(5px)}
+    75%{transform:translateX(-5px)}
+}
+
+.small{
+    font-size:14px;
+    opacity:.8;
 }
 </style>
-
 </head>
 
 <body>
 
+<div class="card">
+
 <h2>🔥 FLAMES Checker</h2>
 
-<input id="s1" placeholder="Your Name"><br>
-<input id="s2" placeholder="Partner Name"><br><br>
+<input id="s1" placeholder="Your Name">
+<input id="s2" placeholder="Partner Name">
 
 <button onclick="check()">Check</button>
 
-<h3 id="result"></h3>
+<div id="result"></div>
+<div id="emoji"></div>
+
+<p class="small">Made by Dilip 💙</p>
+
+</div>
 
 <script>
 function check(){
 
-    let a = document.getElementById("s1").value;
-    let b = document.getElementById("s2").value;
+let a = document.getElementById("s1").value;
+let b = document.getElementById("s2").value;
 
-    fetch("https://flames-1-4zfs.onrender.com/flames",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-            name1:a,
-            name2:b
-        })
-    })
-    .then(res=>res.json())
-    .then(data=>{
-        document.getElementById("result").innerText =
-        "Result : "+data.result;
-    });
+fetch("https://flames-1-4zfs.onrender.com/flames",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify({ name1:a, name2:b })
+})
+.then(res=>res.json())
+.then(data=>{
+
+let r = data.result;
+let text="";
+let emoji="";
+let cls="";
+
+switch(r){
+case "F":
+text="FRIENDS";
+emoji="🤝";
+break;
+
+case "L":
+text="LOVE";
+emoji="❤️";
+cls="heart";
+break;
+
+case "A":
+text="AFFECTION";
+emoji="🥰";
+break;
+
+case "M":
+text="MARRIAGE";
+emoji="💍";
+break;
+
+case "E":
+text="ENEMY";
+emoji="😡";
+cls="angry";
+break;
+
+case "S":
+text="SIBLING";
+emoji="👫";
+break;
+}
+
+document.getElementById("result").innerText = text;
+document.getElementById("emoji").innerHTML =
+`<h1 class='${cls}'>${emoji}</h1>`;
+
+});
 }
 </script>
 
 </body>
 </html>
-

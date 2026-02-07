@@ -108,27 +108,27 @@ fetch("https://flames-1-4zfs.onrender.com/flames",{
         name2:b
     })
 })
-.then(res=>res.text())   // <-- HERE
+.then(res=>res.json())
 .then(data=>{
 
-let r = data.trim();     // <-- IMPORTANT
+let r = data.result;
 
-let text="";
 let emo="";
 let cls="";
 
-if(r=="F"){text="FRIENDS"; emo="🤝";}
-if(r=="L"){text="LOVE"; emo="❤️"; cls="heart";}
-if(r=="A"){text="AFFECTION"; emo="🥰";}
-if(r=="M"){text="MARRIAGE"; emo="💍";}
-if(r=="E"){text="ENEMY"; emo="😡"; cls="angry";}
-if(r=="S"){text="SIBLING"; emo="👫";}
+if(r=="Friend") emo="🤝";
+if(r=="Love"){emo="❤️"; cls="heart";}
+if(r=="Affection") emo="🥰";
+if(r=="Marriage") emo="💍";
+if(r=="Enemy"){emo="😡"; cls="angry";}
+if(r=="Sister") emo="👫";
 
-document.getElementById("result").innerText = "Result : "+text;
+document.getElementById("result").innerText = "Result : "+r;
 document.getElementById("emoji").className = cls;
 document.getElementById("emoji").innerText = emo;
 
 });
+
 
 
 }
@@ -137,5 +137,6 @@ document.getElementById("emoji").innerText = emo;
 
 </body>
 </html>
+
 
 

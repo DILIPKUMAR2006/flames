@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>FLAMES</title>
+
+<style>
+body{
+    text-align:center;
+    margin-top:100px;
+    font-family:Arial;
+}
+input{
+    padding:10px;
+    margin:5px;
+}
+button{
+    padding:10px 20px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>🔥 FLAMES Checker</h2>
+
+<input id="s1" placeholder="Your Name"><br>
+<input id="s2" placeholder="Partner Name"><br><br>
+
+<button onclick="check()">Check</button>
+
+<h3 id="result"></h3>
+
+<script>
+function check(){
+
+    let a = document.getElementById("s1").value;
+    let b = document.getElementById("s2").value;
+
+    fetch("http://localhost:8080/flames",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            name1:a,
+            name2:b
+        })
+    })
+    .then(res=>res.json())
+    .then(data=>{
+        document.getElementById("result").innerText =
+        "Result : "+data.result;
+    });
+}
+</script>
+
+</body>
+</html>
